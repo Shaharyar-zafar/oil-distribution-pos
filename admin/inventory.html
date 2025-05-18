@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inventory Management - Admin Panel</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css" rel="stylesheet">
+    <style>
+        .sidebar {
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            z-index: 100;
+            padding: 48px 0 0;
+            box-shadow: inset -1px 0 0 rgba(0, 0, 0, .1);
+            width: 250px;
+            background-color: #f8f9fa;
+        }
+        .sidebar .nav-link {
+            font-weight: 500;
+            color: #333;
+            padding: 0.5rem 1rem;
+        }
+        .sidebar .nav-link:hover {
+            color: #007bff;
+        }
+        .sidebar .nav-link.active {
+            color: #007bff;
+        }
+        .main-content {
+            margin-left: 250px;
+            padding: 20px;
+        }
+        .navbar {
+            position: fixed;
+            top: 0;
+            right: 0;
+            left: 250px;
+            z-index: 1030;
+            background-color: #fff;
+            box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+        }
+    </style>
+</head>
+<body>
+    <!-- Sidebar -->
+    <nav class="sidebar">
+        <div class="position-sticky">
+            <ul class="nav flex-column">
+                <li class="nav-item">
+                    <a class="nav-link" href="index.html">
+                        <i class="bi bi-speedometer2"></i>
+                        Dashboard
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="sales.html">
+                        <i class="bi bi-cart"></i>
+                        Sales
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="purchases.html">
+                        <i class="bi bi-truck"></i>
+                        Purchases
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="returns.html">
+                        <i class="bi bi-arrow-return-left"></i>
+                        Returns
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="accounts.html">
+                        <i class="bi bi-people"></i>
+                        Accounts
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" href="inventory.html">
+                        <i class="bi bi-box-seam"></i>
+                        Inventory
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="expenses.html">
+                        <i class="bi bi-cash-stack"></i>
+                        Expenses
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="settings.html">
+                        <i class="bi bi-gear"></i>
+                        Settings
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="../index.html">
+                        <i class="bi bi-arrow-left"></i>
+                        Back to POS
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="container-fluid">
+            <!-- Tabs -->
+            <ul class="nav nav-tabs mb-3" id="inventoryTabs" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link active" id="stock-tab" data-bs-toggle="tab" data-bs-target="#stock" type="button" role="tab">
+                        <i class="bi bi-box-seam"></i> Stock Management
+                    </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="transfers-tab" data-bs-toggle="tab" data-bs-target="#transfers" type="button" role="tab">
+                        <i class="bi bi-arrow-left-right"></i> Stock Transfers
+                    </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="brands-tab" data-bs-toggle="tab" data-bs-target="#brands" type="button" role="tab">
+                        <i class="bi bi-tag"></i> Brands
+                    </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="warehouses-tab" data-bs-toggle="tab" data-bs-target="#warehouses" type="button" role="tab">
+                        <i class="bi bi-building"></i> Warehouses
+                    </button>
+                </li>
+            </ul>
+
+            <!-- Tab Content -->
+            <div class="tab-content" id="inventoryTabsContent">
+                <!-- Stock Management Tab -->
+                <div class="tab-pane fade show active" id="stock" role="tabpanel">
+                    <div class="row mb-3">
+                        <div class="col-md-3">
+                            <div class="card bg-primary text-white">
+                                <div class="card-body">
+                                    <h6 class="card-title">Total Items</h6>
+                                    <h3 class="card-text" id="totalItems">0</h3>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="card bg-warning text-white">
+                                <div class="card-body">
+                                    <h6 class="card-title">Low Stock Items</h6>
+                                    <h3 class="card-text" id="lowStockItems">0</h3>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="card bg-danger text-white">
+                                <div class="card-body">
+                                    <h6 class="card-title">Out of Stock</h6>
+                                    <h3 class="card-text" id="outOfStockItems">0</h3>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="card bg-success text-white">
+                                <div class="card-body">
+                                    <h6 class="card-title">Overstocked Items</h6>
+                                    <h3 class="card-text" id="overstockedItems">0</h3>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-header d-flex justify-content-between align-items-center">
+                            <h5 class="mb-0">Stock Management</h5>
+                            <div>
+                                <button class="btn btn-outline-primary me-2" onclick="exportStockReport()">
+                                    <i class="bi bi-download"></i> Export Report
+                                </button>
+                                <button class="btn btn-primary" onclick="showAddItemModal()">
+                                    <i class="bi bi-plus"></i> Add Item
+                                </button>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="row mb-3">
+                                <div class="col-md-3">
+                                    <input type="text" class="form-control" id="searchItem" placeholder="Search items...">
+                                </div>
+                                <div class="col-md-3">
+                                    <select class="form-select" id="filterBrand">
+                                        <option value="">All Brands</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-3">
+                                    <select class="form-select" id="filterWarehouse">
+                                        <option value="">All Warehouses</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-3">
+                                    <select class="form-select" id="filterStatus">
+                                        <option value="">All Status</option>
+                                        <option value="low">Low Stock</option>
+                                        <option value="out">Out of Stock</option>
+                                        <option value="over">Overstocked</option>
+                                        <option value="normal">Normal</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="table-responsive">
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>Name</th>
+                                            <th>Brand</th>
+                                            <th>Purchase Price</th>
+                                            <th>Retail Price</th>
+                                            <th>Total Stock</th>
+                                            <th>Warehouse Stock</th>
+                                            <th>Stock Level</th>
+                                            <th>Status</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="itemsTableBody">
+                                        <!-- Items will be loaded here -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Stock Transfers Tab -->
+                <div class="tab-pane fade" id="transfers" role="tabpanel">
+                    <div class="card">
+                        <div class="card-header d-flex justify-content-between align-items-center">
+                            <h5 class="mb-0">Stock Transfers</h5>
+                            <button class="btn btn-primary" onclick="showNewTransferModal()">
+                                <i class="bi bi-plus"></i> New Transfer
+                            </button>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>Date</th>
+                                            <th>Item</th>
+                                            <th>From</th>
+                                            <th>To</th>
+                                            <th>Quantity</th>
+                                            <th>Note</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="transfersTableBody">
+                                        <!-- Transfers will be loaded here -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Brands Tab -->
+                <div class="tab-pane fade" id="brands" role="tabpanel">
+                    <div class="card">
+                        <div class="card-header d-flex justify-content-between align-items-center">
+                            <h5 class="mb-0">Brands</h5>
+                            <button class="btn btn-primary" onclick="showAddBrandModal()">
+                                <i class="bi bi-plus"></i> Add Brand
+                            </button>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>Name</th>
+                                            <th>Description</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="brandsTableBody">
+                                        <!-- Brands will be loaded here -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Warehouses Tab -->
+                <div class="tab-pane fade" id="warehouses" role="tabpanel">
+                    <div class="card">
+                        <div class="card-header d-flex justify-content-between align-items-center">
+                            <h5 class="mb-0">Warehouses</h5>
+                            <button class="btn btn-primary" onclick="showAddWarehouseModal()">
+                                <i class="bi bi-plus"></i> Add Warehouse
+                            </button>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>Name</th>
+                                            <th>Location</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="warehousesTableBody">
+                                        <!-- Warehouses will be loaded here -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Add Item Modal -->
+    <div class="modal fade" id="addItemModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Add New Item</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="addItemForm">
+                        <div class="mb-3">
+                            <label class="form-label">Name</label>
+                            <input type="text" class="form-control" name="name" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Brand</label>
+                            <select class="form-select" name="brand_id" required>
+                                <!-- Brands will be loaded here -->
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Description</label>
+                            <textarea class="form-control" name="description" rows="2"></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Purchase Price</label>
+                            <input type="number" class="form-control" name="purchase_price" step="0.01" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Retail Price</label>
+                            <input type="number" class="form-control" name="retail_price" step="0.01" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Min Stock Level</label>
+                            <input type="number" class="form-control" name="min_stock_level" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Max Stock Level</label>
+                            <input type="number" class="form-control" name="max_stock_level" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Initial Stock Levels</label>
+                            <div id="warehouseStockInputs">
+                                <!-- Warehouse stock inputs will be loaded here -->
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary" onclick="saveItem()">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Stock Transfer Modal -->
+    <div class="modal fade" id="newTransferModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">New Stock Transfer</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="newTransferForm">
+                        <!-- Brand Selection -->
+                        <div class="mb-3">
+                            <label class="form-label">Brand</label>
+                            <select class="form-select" name="brand_id" required>
+                                <option value="">Select Brand</option>
+                            </select>
+                        </div>
+
+                        <!-- Item Selection -->
+                        <div class="mb-3">
+                            <label class="form-label">Item</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control" id="itemSearch" placeholder="Search items...">
+                                <select class="form-select" name="item_id" required>
+                                    <option value="">Select Item</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Current Stock Levels -->
+                        <div class="mb-3">
+                            <label class="form-label">Current Stock Levels</label>
+                            <div id="stockLevels" class="border rounded p-2 bg-light">
+                                Select an item to view stock levels
+                            </div>
+                        </div>
+
+                        <!-- Warehouse Selection -->
+                        <div class="row">
+                            <!-- Source Warehouse -->
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">From Warehouse</label>
+                                <select class="form-select" name="from_warehouse_id" required>
+                                    <option value="">Select Source Warehouse</option>
+                                </select>
+                                <div id="fromWarehouseStock" class="form-text">
+                                    Select a warehouse to see available stock
+                                </div>
+                            </div>
+
+                            <!-- Destination Warehouse -->
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">To Warehouse</label>
+                                <select class="form-select" name="to_warehouse_id" required>
+                                    <option value="">Select Destination Warehouse</option>
+                                </select>
+                                <div id="toWarehouseStock" class="form-text">
+                                    Select a warehouse to see current stock
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Transfer Details -->
+                        <div class="row">
+                            <!-- Quantity -->
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Transfer Quantity</label>
+                                <input type="number" class="form-control" name="quantity" required min="1">
+                                <div id="quantityValidation" class="form-text"></div>
+                            </div>
+
+                            <!-- Transfer Date -->
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Transfer Date</label>
+                                <input type="datetime-local" class="form-control" name="transfer_date" required>
+                            </div>
+                        </div>
+
+                        <!-- Notes -->
+                        <div class="mb-3">
+                            <label class="form-label">Notes</label>
+                            <textarea class="form-control" name="note" rows="2" 
+                                    placeholder="Enter reason for transfer or any additional notes"></textarea>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary" onclick="saveTransfer()">Complete Transfer</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Brand Modal -->
+    <div class="modal fade" id="addBrandModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Add New Brand</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="addBrandForm">
+                        <div class="mb-3">
+                            <label class="form-label">Name</label>
+                            <input type="text" class="form-control" name="name" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Description</label>
+                            <textarea class="form-control" name="description" rows="2"></textarea>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary" onclick="saveBrand()">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Warehouse Modal -->
+    <div class="modal fade" id="addWarehouseModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Add New Warehouse</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="addWarehouseForm">
+                        <div class="mb-3">
+                            <label class="form-label">Name</label>
+                            <input type="text" class="form-control" name="name" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Location</label>
+                            <textarea class="form-control" name="location" rows="2"></textarea>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary" onclick="saveWarehouse()">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="../js/config.js" type="module"></script>
+    <script src="js/inventory.js" type="module"></script>
+</body>
+</html> 

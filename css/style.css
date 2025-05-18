@@ -1,0 +1,48 @@
+/* Sidebar styles */
+.sidebar {
+    min-height: 100vh;
+    background-color: #343a40;
+    padding-top: 20px;
+}
+
+.sidebar a {
+    color: #fff;
+    text-decoration: none;
+    padding: 10px 20px;
+    display: block;
+}
+
+.sidebar a:hover {
+    background-color: #495057;
+}
+
+.sidebar a.active {
+    background-color: #0d6efd;
+}
+
+/* Main content styles */
+.main-content {
+    padding: 20px;
+}
+
+/* Top navbar styles */
+.top-navbar {
+    background-color: #fff;
+    padding: 15px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+/* QR Code styles */
+.qr-code-container {
+    text-align: center;
+    padding: 15px;
+    background: #fff;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.qr-code-container canvas {
+    max-width: 100%;
+    height: auto;
+} 

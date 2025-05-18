@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>POS System</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+    <script src="https://unpkg.com/html5-qrcode"></script>
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Sidebar -->
+            <div class="col-md-2 sidebar">
+                <h3 class="text-white text-center mb-4">POS System</h3>
+                <a href="pos.html" class="active"><i class="bi bi-cart"></i> New Sale</a>
+                <a href="sales.html"><i class="bi bi-list"></i> Sales History</a>
+                <a href="customers.html"><i class="bi bi-people"></i> Customers</a>
+                <a href="inventory.html"><i class="bi bi-box"></i> Inventory</a>
+                <a href="settings.html"><i class="bi bi-gear"></i> Settings</a>
+            </div>
+
+            <!-- Main Content -->
+            <div class="col-md-10 main-content">
+                <!-- Top Navbar -->
+                <div class="top-navbar d-flex justify-content-between align-items-center">
+                    <h4 class="mb-0">New Sale</h4>
+                    <div class="d-flex gap-2">
+                        <button class="btn btn-primary" onclick="showCustomerSelection()">
+                            <i class="bi bi-person"></i> Select Customer
+                        </button>
+                        <button class="btn btn-success" onclick="startQRScanner()">
+                            <i class="bi bi-qr-code-scan"></i> Scan QR Code
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Customer Info -->
+                <div class="card mb-4" id="customerInfoCard" style="display: none;">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                                <h5 class="mb-1" id="selectedCustomerName"></h5>
+                                <p class="mb-0" id="selectedCustomerDetails"></p>
+                            </div>
+                            <div>
+                                <button class="btn btn-primary" onclick="viewCustomerHistory()">
+                                    <i class="bi bi-clock-history"></i> View History
+                                </button>
+                                <button class="btn btn-secondary" onclick="clearCustomerSelection()">
+                                    <i class="bi bi-x"></i> Clear
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Rest of your existing POS content -->
+                // ... existing code ...
+            </div>
+        </div>
+    </div>
+
+    <!-- Customer Selection Modal -->
+    <div class="modal fade" id="customerSelectionModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Select Customer</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <input type="text" class="form-control" id="customerSearch" placeholder="Search customers...">
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Phone</th>
+                                    <th>City</th>
+                                    <th>Balance</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="customerList">
+                                <!-- Customer list will be loaded here -->
+                            </tbody>
+                        </table>
+                    </div>
+                    <button class="btn btn-primary" onclick="showNewCustomerForm()">
+                        <i class="bi bi-plus"></i> Add New Customer
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- New Customer Modal -->
+    <div class="modal fade" id="newCustomerModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Add New Customer</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="newCustomerForm">
+                        <div class="mb-3">
+                            <label class="form-label">Name</label>
+                            <input type="text" class="form-control" id="newCustomerName" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Phone Number</label>
+                            <input type="text" class="form-control" id="newCustomerPhone">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">City</label>
+                            <select class="form-select" id="newCustomerCity" required>
+                                <!-- Cities will be loaded here -->
+                            </select>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary" onclick="saveNewCustomer()">Save Customer</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- QR Scanner Modal -->
+    <div class="modal fade" id="qrScannerModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Scan Customer QR Code</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div id="qr-reader" style="width: 100%"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script type="module" src="js/pos.js"></script>
+</body>
+</html> 

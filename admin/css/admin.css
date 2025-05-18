@@ -1,0 +1,361 @@
+/* Admin Area Common Styles */
+:root {
+    --admin-primary: #198754;
+    --admin-secondary: #6c757d;
+    --admin-dark: #212529;
+    --admin-light: #f8f9fa;
+    --admin-border: #dee2e6;
+    --admin-success: #198754;
+    --admin-danger: #dc3545;
+    --admin-warning: #ffc107;
+    --admin-info: #0dcaf0;
+}
+
+body {
+    font-size: .875rem;
+    background-color: var(--admin-light);
+}
+
+/* Dark background for sales and purchases pages */
+body.sales-page,
+body.purchases-page {
+    background-color: var(--admin-dark);
+}
+
+/* Sidebar Styles */
+.sidebar {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 100;
+    padding: 48px 0 0;
+    box-shadow: inset -1px 0 0 rgba(0, 0, 0, .1);
+    background-color: var(--admin-dark);
+    width: 250px;
+}
+
+.sidebar-sticky {
+    position: relative;
+    top: 0;
+    height: calc(100vh - 48px);
+    padding-top: .5rem;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+.sidebar .nav-link {
+    font-weight: 500;
+    color: #ced4da;
+    padding: .75rem 1rem;
+    margin-bottom: .25rem;
+    border-radius: 0.25rem;
+    transition: all 0.3s ease;
+}
+
+.sidebar .nav-link:hover {
+    color: #fff;
+    background-color: rgba(255, 255, 255, .1);
+}
+
+.sidebar .nav-link.active {
+    color: #fff;
+    background-color: var(--admin-primary);
+}
+
+.sidebar .nav-link .bi {
+    margin-right: .5rem;
+}
+
+/* Header Styles */
+.navbar {
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 250px;
+    z-index: 99;
+    height: 60px;
+    background-color: #fff !important;
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+}
+
+.navbar-brand {
+    padding-top: .75rem;
+    padding-bottom: .75rem;
+    font-size: 1rem;
+    background-color: rgba(0, 0, 0, .25);
+    box-shadow: inset -1px 0 0 rgba(0, 0, 0, .25);
+}
+
+.navbar .navbar-toggler {
+    top: .25rem;
+    right: 1rem;
+}
+
+/* Main Content Styles */
+.main-content {
+    margin-left: 250px;
+    padding-top: 70px;
+}
+
+/* Card Styles */
+.card {
+    border: none;
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+    margin-bottom: 1rem;
+    transition: transform 0.2s;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+}
+
+.card-header {
+    background-color: #fff;
+    border-bottom: 1px solid var(--admin-border);
+    padding: 1rem;
+}
+
+.card-header.bg-success {
+    background-color: var(--admin-primary) !important;
+}
+
+.card-body {
+    padding: 1.5rem;
+}
+
+.card-title {
+    color: #6c757d;
+    font-size: 0.875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.card-text {
+    color: #2c3e50;
+    margin-bottom: 0;
+    font-weight: 600;
+}
+
+/* Button Styles */
+.btn-success {
+    background-color: var(--admin-primary);
+    border-color: var(--admin-primary);
+}
+
+.btn-success:hover {
+    background-color: #157347;
+    border-color: #146c43;
+}
+
+.btn-outline-success {
+    color: var(--admin-primary);
+    border-color: var(--admin-primary);
+}
+
+.btn-outline-success:hover {
+    background-color: var(--admin-primary);
+    border-color: var(--admin-primary);
+}
+
+/* Table Styles */
+.table-responsive {
+    margin-top: 1rem;
+    background: #fff;
+    border-radius: 0.25rem;
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+}
+
+.table {
+    margin-bottom: 0;
+}
+
+.table th {
+    border-top: none;
+    background-color: var(--admin-light);
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    letter-spacing: 0.5px;
+}
+
+/* Form Styles */
+.form-label {
+    font-weight: 500;
+    color: #6c757d;
+    font-size: 0.875rem;
+}
+
+.form-control:focus {
+    border-color: var(--admin-primary);
+    box-shadow: 0 0 0 0.25rem rgba(25, 135, 84, 0.25);
+}
+
+.form-select:focus {
+    border-color: var(--admin-primary);
+    box-shadow: 0 0 0 0.25rem rgba(25, 135, 84, 0.25);
+}
+
+/* Filters Section */
+.filters {
+    background: #fff;
+    padding: 1.5rem;
+    border-radius: 0.25rem;
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+    margin-bottom: 1rem;
+}
+
+/* Modal Styles */
+.modal-header {
+    background-color: var(--admin-light);
+    border-bottom: 1px solid var(--admin-border);
+}
+
+.modal-footer {
+    background-color: var(--admin-light);
+    border-top: 1px solid var(--admin-border);
+}
+
+/* Badge Styles */
+.badge {
+    font-weight: 500;
+    padding: 0.35em 0.65em;
+}
+
+/* POS-like styles */
+.brand-tab {
+    cursor: pointer;
+    margin: 0.25rem;
+    border-radius: 20px !important;
+    padding: 0.5rem 1rem !important;
+}
+
+.brand-tab.active {
+    background-color: var(--admin-primary);
+    color: white;
+}
+
+.product-card {
+    cursor: pointer;
+    transition: all 0.3s;
+    height: 100%;
+}
+
+.product-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.cart-container {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    width: 400px;
+    z-index: 1000;
+    max-height: 80vh;
+    overflow-y: auto;
+}
+
+.cart-header {
+    padding: 1rem;
+    background: var(--admin-primary);
+    color: white;
+    border-radius: 10px 10px 0 0;
+}
+
+.product-grid {
+    margin-bottom: 40px;
+}
+
+/* Supplier Search Styles */
+.supplier-search-container {
+    position: relative;
+}
+
+.supplier-suggestions {
+    position: absolute;
+    width: 100%;
+    max-height: 200px;
+    overflow-y: auto;
+    background: white;
+    border: 1px solid var(--admin-border);
+    border-radius: 0.25rem;
+    z-index: 1000;
+    display: none;
+}
+
+.supplier-suggestion {
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+}
+
+.supplier-suggestion:hover {
+    background-color: var(--admin-light);
+}
+
+/* Quantity Modal Styles */
+.quantity-modal .warehouse-item {
+    border: 1px solid var(--admin-border);
+    padding: 0.5rem;
+    margin-bottom: 0.5rem;
+    border-radius: 0.25rem;
+}
+
+.quantity-modal .stock-info {
+    font-size: 0.8rem;
+    color: var(--admin-secondary);
+}
+
+/* Pagination Styles */
+.pagination {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+/* Utility Classes */
+.text-success {
+    color: var(--admin-primary) !important;
+}
+
+.bg-success {
+    background-color: var(--admin-primary) !important;
+}
+
+.border-success {
+    border-color: var(--admin-primary) !important;
+}
+
+/* Animation Classes */
+.fade-in {
+    animation: fadeIn 0.3s ease-in;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+} 
